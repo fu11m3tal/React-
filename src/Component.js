@@ -1,13 +1,18 @@
-const Component = (props) => {
+import PropTypes from 'prop-types';
+const Component = ({data}) => {
   return (
     <div>
-      {props.data}
+      {data}
     </div>
   )
 }
 
 Component.defaultProps = {
-  data: undefined
+  data: 11
+}
+
+Component.propTypes = {
+  data: PropTypes.number.isRequired,
 }
 
 export default Component
