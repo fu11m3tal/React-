@@ -1,28 +1,25 @@
-import Component from './Component'
+import Form from './Form'
 import List from './List'
 import Task from './Task'
 import { useState }  from 'react';
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [theme, setTheme] = useState("blue")
+  const [todos, setTodos] = useState(["default"])
   
-  function decrementCount() {
-    setCount(prevCount => prevCount - 1)
-  }
-  function incrementCount() {
-    setCount(prevCount => prevCount + 1)
-  }
-  function changeTheme() {
-    setTheme(() => "green")
+  
+  function addToDo() {
+    var todo = document.getElementById("form").value
+  
+    if(todo !== "") {
+      console.log("tasked")
+      setTodos((currTodos) => [...currTodos, todo])
+    }
+    document.getElementById("form").value = ""
   }
   return (
     <div className="App">
-      <h1>P{theme}</h1>
-      <button onClick={decrementCount}>-</button>
-      {count}
-      <button onClick={incrementCount}>+</button>
-      <button onClick={changeTheme}>theme</button>
+      <Form todos={todos} addToDo={addToDo}/>
+      {todos.map(todo => <h1>{todo}</h1>)}
     </div>
   );
 }
