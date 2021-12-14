@@ -1,47 +1,41 @@
 
-import { useState }  from 'react';
+
+import React, { useState, useEffect } from 'react';
+import {Button}  from './Styles/Button.style'
+import {AppContainer}  from './Styles/App.style'
+import Form from './Components/Form'
+import List from './Components/List'
 const axios = require('axios');
 
 function App() {
   const [todos, setTodos] = useState(["default"])
-  // axios.get('/api')
-  // .then(function (response) {
-  //   // handle success
-  //   // return response.data
-  //   return response.data
-  //   // console.logs(response.data);
-  // })
-  // .catch(function (error) {
-  //   // handle error
-  //   console.log(error);
-  // })
-  // .then(function (data) {
-  //   // always executed
-  //   // setTodos((currentForm) => (data))
+  const [color, setColor] = useState("white")
+  const [count, setCount] = useState(0)
 
-  // });
-  function getData() {
-    return axios.get('/api')
-  }
-  Promise.all([getData()])
-  .then(function (results) {
-    const data = results[0].data;
-    console.log(data)
-    return data
+  useEffect(async () => {
+    const result = await axios(
+      '/api',
+    );
+    setTodos(result.data);
   });
+
+  function increaseCount() {
+    setCount(count + 1)
+  }
   function addToDo() {
     var todo = document.getElementById("form").value
-  
+    
     if(todo !== "") {
       setTodos((currTodos) => [...currTodos, todo])
     }
     document.getElementById("form").value = ""
   }
   return (
-    <div className="App">
-      {/* <Form todos={todos} addToDo={addToDo}/>
-      {todos.map(todo => <h1>{todo}</h1>)} */}
-    </div>
+    <AppContainer backgroundColor="white">
+      <Button backgroundColor="pink" onClick={increaseCount}>Click {count} Button</Button>
+      <Form/>
+      <List/>
+    </AppContainer>
   );
 }
 
